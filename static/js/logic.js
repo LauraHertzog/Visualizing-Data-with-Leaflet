@@ -1,6 +1,7 @@
 //Function to set colors corresponding to earthquake magnitude: size and depth
 function depthColor(depth) {
     var color = "";
+
     if (depth > 90 ) {
         color = "red";
 
@@ -16,7 +17,7 @@ function depthColor(depth) {
     } else if (depth > 10) {
         color = "SpringGreen"
 
-    } else { color = "GreenYellow"}
+    } else {color = "GreenYellow"}
 
     return color;
   
@@ -57,8 +58,28 @@ d3.json(queryUrl).then(function(data) {
                     fillOpacity: 1, 
                     weight: .5, 
                     radius: feature.properties.mag * 5,
-                    fillColor:depthColor(feature.geometry.coordinates[2]) };
-        }
+                    fillColor: depthColor(feature.geometry.coordinates[2]) };
+        },
+        
+    //add legend
+    var legend = L.control({
+        position: "bottomright", 
+    });
+
+    //details for legend
+    legend.onAdd = function () {
+        var div = L.DomUtil.create("div", "info legend");
+        var grades = [10, 30, 50, 70, 90]; 
+        var colors = [
+            "red",
+            "orange",
+            "gold",
+            "yellow",
+            "SpringGreen",
+            "GreenYellow"
+        ];
+        //Display markers describing time and place of earthquake
+        onEachFeature
     }).bindPopup(function (layer) {
         return layer.feature.properties.description;
     }).addTo(myMap);
