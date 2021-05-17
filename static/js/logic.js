@@ -14,9 +14,9 @@ function depthColor(depth) {
         color = "yellow"
 
     } else if (depth > 10) {
-        color = "lime"
+        color = "SpringGreen"
 
-    } else { color = "green"}
+    } else { color = "GreenYellow"}
 
     return color;
   
