@@ -52,6 +52,7 @@ d3.json(queryUrl).then(function(data) {
         pointToLayer: function(geoJsonPoint, latlng) {
             return L.circleMarker(latlng);
         },
+        //create style
         style: function (feature) {
             return {color: "white",
                     opacity: 1,
@@ -60,6 +61,8 @@ d3.json(queryUrl).then(function(data) {
                     radius: feature.properties.mag * 5,
                     fillColor: depthColor(feature.geometry.coordinates[2])};
         },
+
+        //add in feature details
         onEachFeature: function (feature, layer) {
             layer.bindPopup( 
                 "Magnitude: "
@@ -71,7 +74,7 @@ d3.json(queryUrl).then(function(data) {
 
             );
      }
-
+//add feature to map 
 }).addTo(myMap);
 
 //add legend
@@ -85,8 +88,8 @@ d3.json(queryUrl).then(function(data) {
         var grades = [-10, 10, 30, 50, 70, 90]; 
         var colors = [
             "red",
-            "#ffa500",
-            "#ffd700",
+            "orange",
+            "gold",
             "yellow",
             "SpringGreen",
             "GreenYellow"
@@ -103,6 +106,8 @@ d3.json(queryUrl).then(function(data) {
     }      
     return div;
     };
+
+    //add legend to map 
     legend.addTo(myMap);
 });
 
