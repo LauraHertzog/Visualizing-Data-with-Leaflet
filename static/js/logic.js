@@ -5,7 +5,7 @@ function depthColor(depth) {
     if (depth > 90 ) {
         color = "red";
 
-    } else if(depth> 70) { 
+    } else if(depth > 70) { 
         color = "orange"
 
     } else if (depth > 50) {
@@ -58,10 +58,23 @@ d3.json(queryUrl).then(function(data) {
                     fillOpacity: 1, 
                     weight: .5, 
                     radius: feature.properties.mag * 5,
-                    fillColor: depthColor(feature.geometry.coordinates[2]) };
+                    fillColor: depthColor(feature.geometry.coordinates[2])};
         },
-        
-    //add legend
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup( 
+                "Magnitude: "
+                + feature.properties.mag
+                + "<br> Depth: "
+                + feature.geometry.coordinates[2]
+                + "<br> Place : "
+                + feature.properties.place
+
+            );
+     }
+
+}).addTo(myMap);
+
+//add legend
     var legend = L.control({
         position: "bottomright", 
     });
@@ -69,23 +82,27 @@ d3.json(queryUrl).then(function(data) {
     //details for legend
     legend.onAdd = function () {
         var div = L.DomUtil.create("div", "info legend");
-        var grades = [10, 30, 50, 70, 90]; 
+        var grades = [-10, 10, 30, 50, 70, 90]; 
         var colors = [
             "red",
-            "orange",
-            "gold",
+            "#ffa500",
+            "#ffd700",
             "yellow",
             "SpringGreen",
             "GreenYellow"
-        ];
-        //Display markers describing time and place of earthquake
-        onEachFeature
-    }).bindPopup(function (layer) {
-        return layer.feature.properties.description;
-    }).addTo(myMap);
-    //createFeatures(data.features);
+    ];
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:'
+             + colors[i] 
+             + '"></i> ' 
+             + grades[i] 
+             + (grades[i + 1] ? '&ndash;' 
+             + grades[i + 1] 
+             + '<br>' : '+');
+    }      
+    return div;
+    };
+    legend.addTo(myMap);
 });
 
-// function createFeatures(earthquakeData) {}
-//legend inside d3 json function 
-//description 
