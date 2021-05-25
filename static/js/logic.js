@@ -87,12 +87,12 @@ d3.json(queryUrl).then(function(data) {
         var div = L.DomUtil.create("div", "info legend");
         var grades = [-10, 10, 30, 50, 70, 90]; 
         var colors = [
-            "red",
-            "orange",
-            "gold",
-            "yellow",
+            "GreenYellow", 
             "SpringGreen",
-            "GreenYellow"
+            "yellow",
+            "gold",
+            "orange",
+            "red"
     ];
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
